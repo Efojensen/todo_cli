@@ -44,3 +44,30 @@ func (ptrTodoSl *Todos) delete (index int) error {
 	return nil
 }
 
+func (ptrTodos *Todos) toggleCompleted (index int) error {
+	if err := ptrTodos.validateIndex(index); err != nil {
+		return err
+	}
+
+	todos := *ptrTodos
+
+	if !todos[index].Completed {
+		completedTime := time.Now()
+		todos[index].CompletedAt = &completedTime
+	}
+
+	todos[index].Completed = !todos[index].Completed
+
+	return nil
+}
+
+func (ptrTodos *Todos) editTodo (index int, task string) error {
+	if err := ptrTodos.validateIndex(index); err != nil {
+		return err
+	}
+
+	todos := *ptrTodos
+	todos[index].Title = task
+
+	return nil
+}
