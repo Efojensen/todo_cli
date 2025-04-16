@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 type Todo struct {
 	Title       string
@@ -11,7 +14,7 @@ type Todo struct {
 
 type Todos []Todo
 
-func (todos *Todos) add (title string) {
+func (ptrTodoSl *Todos) add (title string) {
 	todo := Todo{
 		Title: title,
 		Completed: false,
@@ -19,5 +22,25 @@ func (todos *Todos) add (title string) {
 		CompletedAt: nil,
 	}
 
-	*todos = append(*todos, todo)
+	*ptrTodoSl = append(*ptrTodoSl, todo)
 }
+
+func (ptrTodoSl *Todos) validateIndex (index int) error {
+	if index < 0 || index > len(*ptrTodoSl) {
+		err := errors.New("invalid index")
+		return err
+	}
+
+	return nil
+}
+
+func (ptrTodoSl *Todos) delete (index int) error {
+	t := *ptrTodoSl
+	if err := ptrTodoSl.validateIndex(index); err != nil {
+		return err
+	}
+
+	*ptrTodoSl = append(t[:index], t[index+1:]...)
+	return nil
+}
+
