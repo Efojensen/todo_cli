@@ -1,13 +1,11 @@
 package main
 
-import "fmt"
-
 func main() {
 	todos := Todos{}
 	todos.add("Go to school")
 	todos.add("Get a job")
-	todos.add("Marry someone beautiful and wise")
-	fmt.Printf("%+v\n", todos)
+	todos.add("Drink whisky once")
+	todos.toggleCompleted(1)
+	todos.print()
 	todos.delete(2)
-	fmt.Printf("%+v", todos)
 }
