@@ -18,7 +18,7 @@ type Todo struct {
 
 type Todos []Todo
 
-func (ptrTodoSl *Todos) add(title string) {
+func (ptrTodos *Todos) add(title string) {
 	todo := Todo{
 		Title:       title,
 		Completed:   false,
@@ -26,11 +26,11 @@ func (ptrTodoSl *Todos) add(title string) {
 		CompletedAt: nil,
 	}
 
-	*ptrTodoSl = append(*ptrTodoSl, todo)
+	*ptrTodos = append(*ptrTodos, todo)
 }
 
-func (ptrTodoSl *Todos) validateIndex(index int) error {
-	if index < 0 || index > len(*ptrTodoSl) {
+func (ptrTodos *Todos) validateIndex(index int) error {
+	if index < 0 || index > len(*ptrTodos) {
 		err := errors.New("invalid index")
 		return err
 	}
@@ -38,13 +38,13 @@ func (ptrTodoSl *Todos) validateIndex(index int) error {
 	return nil
 }
 
-func (ptrTodoSl *Todos) delete(index int) error {
-	t := *ptrTodoSl
-	if err := ptrTodoSl.validateIndex(index); err != nil {
+func (ptrTodos *Todos) delete(index int) error {
+	t := *ptrTodos
+	if err := ptrTodos.validateIndex(index); err != nil {
 		return err
 	}
 
-	*ptrTodoSl = append(t[:index], t[index+1:]...)
+	*ptrTodos = append(t[:index], t[index+1:]...)
 	return nil
 }
 
